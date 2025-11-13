@@ -1,0 +1,192 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # Laravel Backend Tests
+  backend:
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_DATABASE: myshop_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+      
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, dom, fileinfo, mysql, redis
+          coverage: xdebug
+
+      - name: Copy .env
+        run: |
+          cd backend
+          php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Composer dependencies
+        run: |
+          cd backend
+          composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Generate application key
+        run: |
+          cd backend
+          php artisan key:generate
+
+      - name: Run database migrations
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: myshop_test
+          DB_USERNAME: root
+          DB_PASSWORD: secret
+        run: |
+          cd backend
+          php artisan migrate --force
+
+      - name: Run PHPUnit tests
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: myshop_test
+          DB_USERNAME: root
+          DB_PASSWORD: secret
+          REDIS_HOST: 127.0.0.1
+          AI_MOCK: true
+          PINECONE_MOCK: true
+          MAPS_MOCK: true
+          WEB3_MOCK: true
+          IPFS_MOCK: true
+        run: |
+          cd backend
+          php artisan test --parallel
+
+      - name: Run PHP CS Fixer (code style)
+        run: |
+          cd backend
+          composer require --dev friendsofphp/php-cs-fixer
+          vendor/bin/php-cs-fixer fix --dry-run --diff --verbose
+
+  # React Frontend Tests
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Run ESLint
+        run: |
+          cd frontend
+          npm run lint
+
+      - name: Run type checking
+        run: |
+          cd frontend
+          npm run type-check
+
+      - name: Run tests
+        run: |
+          cd frontend
+          npm test -- --run
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build
+
+  # Web3 Service Tests
+  web3:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: web3-service/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd web3-service
+          npm ci
+
+      - name: Run linting
+        run: |
+          cd web3-service
+          npm run lint
+
+      - name: Run Hardhat tests
+        env:
+          WEB3_MOCK: true
+        run: |
+          cd web3-service
+          npx hardhat test
+
+  # Optional: E2E tests (Cypress)
+  # e2e:
+  #   runs-on: ubuntu-latest
+  #   needs: [backend, frontend]
+  #   
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #     
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '18'
+  #     
+  #     - name: Run Cypress E2E tests
+  #       uses: cypress-io/github-action@v5
+  #       with:
+  #         working-directory: frontend
+  #         start: npm run dev
+  #         wait-on: 'http://localhost:3000'
+  #         wait-on-timeout: 120

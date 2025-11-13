@@ -1,0 +1,377 @@
+import React, { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import api, { Product } from '../services/api';
+
+interface ProductListProps {
+  category?: string;
+  isQuickItem?: boolean;
+}
+
+type SortOption = 'newest' | 'price-low' | 'price-high' | 'name-asc' | 'name-desc';
+type ViewMode = 'grid' | 'list';
+
+const ProductList: React.FC<ProductListProps> = ({ category, isQuickItem }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'all');
+  const [sortBy, setSortBy] = useState<SortOption>((searchParams.get('sort') as SortOption) || 'newest');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [showFilters, setShowFilters] = useState(false);
+
+  const categories = ['all', 'Electronics', 'Fashion', 'Home', 'Books', 'Sports', 'Beauty', 'Toys'];
+
+  useEffect(() => {
+    loadProducts();
+  }, [category, isQuickItem, currentPage]);
+
+  useEffect(() => {
+    filterAndSortProducts();
+  }, [products, searchQuery, selectedCategory, sortBy]);
+
+  const loadProducts = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await api.getProducts({
+        page: currentPage,
+        per_page: 50, // Load more for client-side filtering
+        category: category || (selectedCategory !== 'all' ? selectedCategory : undefined),
+        is_quick_item: isQuickItem,
+      });
+      setProducts(response.data);
+      setTotalPages(response.last_page);
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Failed to load products');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filterAndSortProducts = () => {
+    let filtered = [...products];
+
+    // Search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (p) =>
+          p.title.toLowerCase().includes(query) ||
+          p.description.toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query) ||
+          (p.tags && p.tags.some((tag) => tag.toLowerCase().includes(query)))
+      );
+    }
+
+    // Category filter
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter((p) => p.category === selectedCategory);
+    }
+
+    // Sort
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'price-low':
+          return a.price_cents - b.price_cents;
+        case 'price-high':
+          return b.price_cents - a.price_cents;
+        case 'name-asc':
+          return a.title.localeCompare(b.title);
+        case 'name-desc':
+          return b.title.localeCompare(a.title);
+        case 'newest':
+        default:
+          return b.id - a.id;
+      }
+    });
+
+    setFilteredProducts(filtered);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSearchParams({ search: searchQuery, category: selectedCategory, sort: sortBy });
+  };
+
+  const addToCart = (product: Product, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const existingItem = cart.find((item: any) => item.product_id === product.id);
+    
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push({
+        product_id: product.id,
+        title: product.title,
+        price_cents: product.price_cents,
+        quantity: 1,
+        image_url: product.image_url,
+      });
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.dispatchEvent(new Event('storage')); // Trigger cart update
+    
+    // Show toast (simple implementation)
+    const toast = document.createElement('div');
+    toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in';
+    toast.textContent = '✓ Added to cart';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+  };
+
+  const formatPrice = (cents: number): string => {
+    return `$${(cents / 100).toFixed(2)}`;
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          {error}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* Header with Search */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+          {category || (isQuickItem ? '⚡ Quick Items' : '🛍️ All Products')}
+        </h1>
+        
+        {/* Search Bar */}
+        <form onSubmit={handleSearch} className="mb-4">
+          <div className="flex gap-2">
+            <div className="flex-1 relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search products by name, description, or tags..."
+                className="w-full px-4 py-3 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <svg className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <button
+              type="submit"
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-colors"
+            >
+              Search
+            </button>
+          </div>
+        </form>
+
+        {/* Filters and Controls */}
+        <div className="flex flex-wrap gap-4 items-center justify-between">
+          <div className="flex flex-wrap gap-3 items-center">
+            {/* Category Filter */}
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat === 'all' ? 'All Categories' : cat}
+                </option>
+              ))}
+            </select>
+
+            {/* Sort By */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as SortOption)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="newest">Newest First</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name-asc">Name: A to Z</option>
+              <option value="name-desc">Name: Z to A</option>
+            </select>
+
+            {/* Filter Toggle (Mobile) */}
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="md:hidden px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+            >
+              Filters {showFilters ? '▼' : '▶'}
+            </button>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {/* View Mode */}
+            <div className="flex border border-gray-300 rounded-lg overflow-hidden">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`px-3 py-2 ${viewMode === 'grid' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'}`}
+                title="Grid view"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`px-3 py-2 ${viewMode === 'list' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'}`}
+                title="List view"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+            
+            <p className="text-gray-600 font-medium">{filteredProducts.length} products</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Products Grid/List */}
+      <div className={viewMode === 'grid' 
+        ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        : "flex flex-col gap-4"}>
+        {filteredProducts.map((product) => (
+          <div
+            key={product.id}
+            className={viewMode === 'grid' 
+              ? "group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+              : "group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 flex"
+            }
+          >
+            <Link to={`/products/${product.id}`} className={viewMode === 'grid' ? "" : "flex w-full"}>
+              <div className={viewMode === 'grid' ? "relative" : "relative w-48 flex-shrink-0"}>
+                {product.image_url ? (
+                  <img
+                    src={product.image_url}
+                    alt={product.title}
+                    className={viewMode === 'grid' 
+                      ? "w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                      : "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"}
+                  />
+                ) : (
+                  <div className={viewMode === 'grid' ? "w-full h-48 flex items-center justify-center bg-gray-300" : "w-full h-full flex items-center justify-center bg-gray-300"}>
+                    <span className="text-gray-500">No Image</span>
+                  </div>
+                )}
+                {product.is_quick_item && (
+                  <div className="absolute top-2 right-2 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                    Quick ⚡
+                  </div>
+                )}
+              </div>
+
+              <div className={viewMode === 'grid' ? "p-4" : "p-4 flex-1 flex flex-col justify-between"}>
+                <div>
+                  <div className="flex items-start justify-between mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 flex-1">
+                      {product.title}
+                    </h3>
+                  </div>
+
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                    {product.description}
+                  </p>
+
+                  {product.tags && product.tags.length > 0 && (
+                    <div className="mb-3 flex flex-wrap gap-1">
+                      {product.tags.slice(0, 3).map((tag, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-2xl font-bold text-blue-600">
+                      {formatPrice(product.price_cents)}
+                    </span>
+                    <span className="ml-2 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">{product.category}</span>
+                  </div>
+                  <button
+                    onClick={(e) => addToCart(product, e)}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md hover:shadow-lg transform hover:scale-105"
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
+
+      {filteredProducts.length === 0 && !loading && (
+        <div className="text-center py-16">
+          <svg className="mx-auto h-24 w-24 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 12h.01M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" />
+          </svg>
+          <p className="text-gray-500 text-xl mb-2">No products found</p>
+          <p className="text-gray-400 mb-4">Try adjusting your search or filters</p>
+          <button
+            onClick={() => {
+              setSearchQuery('');
+              setSelectedCategory('all');
+              setSortBy('newest');
+            }}
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Clear Filters
+          </button>
+        </div>
+      )}
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="mt-8 flex justify-center gap-2">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+          >
+            Previous
+          </button>
+          <span className="px-4 py-2 text-gray-700">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 border border-gray-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ProductList;
