@@ -38,10 +38,22 @@ Route::get('/health', function () {
 
 // Authentication routes
 Route::prefix('auth')->group(function () {
+    // Standard email/password auth
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:sanctum');
+    
+    // OTP verification
+    Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+    Route::post('/resend-otp', [AuthController::class, 'resendOtp']);
+    
+    // Web3 wallet auth
+    Route::post('/web3/login', [AuthController::class, 'web3Auth']);
+    
+    // Protected routes
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post('/refresh', [AuthController::class, 'refresh']);
+    });
 });
 
 // Public group buy browsing (no auth required)
