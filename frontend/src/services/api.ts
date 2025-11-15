@@ -194,14 +194,18 @@ class ApiClient {
     businessName?: string,
     passwordConfirmation?: string
   ): Promise<AuthResponse> {
-    const response = await this.client.post<AuthResponse>('/auth/register', {
+    const payload = {
       name,
       email,
       password,
       password_confirmation: passwordConfirmation || password,
       role,
       business_name: businessName,
-    });
+    };
+    
+    console.log('Registration payload:', payload);
+    
+    const response = await this.client.post<AuthResponse>('/auth/register', payload);
     this.setAuthToken(response.data.access_token);
     return response.data;
   }

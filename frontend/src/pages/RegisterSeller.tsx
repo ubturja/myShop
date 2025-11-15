@@ -37,7 +37,22 @@ export default function RegisterSeller() {
       });
       navigate('/seller/dashboard');
     } catch (err: any) {
-      const message = err.response?.data?.message || err.message || 'Registration failed';
+      console.error('Registration error:', err.response?.data);
+      let message = 'Registration failed. Please try again.';
+      
+      // Show validation errors if available
+      if (err.response?.data?.errors) {
+        const errors = err.response.data.errors;
+        const errorMessages = Object.entries(errors).map(([field, msgs]: [string, any]) => {
+          return `${field}: ${Array.isArray(msgs) ? msgs.join(', ') : msgs}`;
+        });
+        message = errorMessages.join('; ');
+      } else if (err.response?.data?.message) {
+        message = err.response.data.message;
+      } else if (err.message) {
+        message = err.message;
+      }
+      
       setError(message);
     } finally {
       setLoading(false);
