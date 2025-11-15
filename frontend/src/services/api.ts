@@ -351,13 +351,39 @@ class ApiClient {
     conversationHistory?: ChatMessage[]
   ): Promise<{ reply: string; products?: Product[] }> {
     const response = await this.client.post<{
-      reply: string;
-      products?: Product[];
+      response: string;
+      products?: Array<{
+        id: number;
+        title: string;
+        description: string;
+        price: string;
+        category: string;
+        similarity_score: number;
+      }>;
     }>('/ai/assistant', {
       message,
       conversation_history: conversationHistory,
     });
-    return response.data;
+    
+    // If products are returned, fetch full details
+    let fullProducts: Product[] | undefined;
+    if (response.data.products && response.data.products.length > 0) {
+      const productIds = response.data.products.map(p => p.id);
+      try {
+        const productsResponse = await this.client.get<{ data: Product[] }>('/products', {
+          params: { ids: productIds.join(','), limit: productIds.length }
+        });
+        fullProducts = productsResponse.data.data;
+      } catch (error) {
+        console.error('Failed to fetch full product details:', error);
+        fullProducts = undefined;
+      }
+    }
+    
+    return {
+      reply: response.data.response,
+      products: fullProducts,
+    };
   }
 
   async getRecommendations(params: {
