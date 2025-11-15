@@ -50,7 +50,8 @@ class AuthService {
       data.email,
       data.password,
       data.role,
-      data.business_name
+      data.business_name,
+      data.password_confirmation
     );
     
     this.setToken(response.access_token);

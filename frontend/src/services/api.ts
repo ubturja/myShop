@@ -191,13 +191,14 @@ class ApiClient {
     email: string,
     password: string,
     role?: 'CUSTOMER' | 'SELLER',
-    businessName?: string
+    businessName?: string,
+    passwordConfirmation?: string
   ): Promise<AuthResponse> {
     const response = await this.client.post<AuthResponse>('/auth/register', {
       name,
       email,
       password,
-      password_confirmation: password,
+      password_confirmation: passwordConfirmation || password,
       role,
       business_name: businessName,
     });
