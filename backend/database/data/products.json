@@ -1,0 +1,1090 @@
+[
+  {
+    "title": "Atlas Wireless Noise-Cancelling Headphones",
+    "description": "Over-ear Bluetooth headphones with active noise cancellation, 30h battery, and fast charging.",
+    "price_cents": 12999,
+    "currency": "USD",
+    "sku": "AWH-1000-BLK",
+    "image_url": "https://source.unsplash.com/featured/?headphones",
+    "category": "Electronics",
+    "tags": ["audio", "wireless", "headphones", "bluetooth"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 50,
+      "STORE_002": 20,
+      "STORE_003": 10
+    }
+  },
+  {
+    "title": "Lumi Linen Summer Shirt - Light Blue (M)",
+    "description": "Lightweight linen shirt designed for warm-weather events, breathable fabric and tailored fit.",
+    "price_cents": 4599,
+    "currency": "USD",
+    "sku": "LLS-400-BLU-M",
+    "image_url": "https://source.unsplash.com/featured/?linen-shirt",
+    "category": "Fashion",
+    "tags": ["shirt", "linen", "summer", "men"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 15,
+      "STORE_002": 40,
+      "STORE_003": 5
+    }
+  },
+  {
+    "title": "QuickCharge 18W USB-C Wall Charger",
+    "description": "Compact 18W USB-C wall charger for fast charging phones and accessories. Travel-friendly size.",
+    "price_cents": 999,
+    "currency": "USD",
+    "sku": "QC18W-USB-C",
+    "image_url": "https://source.unsplash.com/featured/?charger,phone",
+    "category": "Accessories",
+    "tags": ["charger", "usb-c", "quick-charge", "travel"],
+    "is_quick_item": true,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 200,
+      "STORE_002": 180,
+      "STORE_003": 120
+    }
+  },
+  {
+    "title": "Samsung Galaxy S24 Ultra 256GB - Phantom Black",
+    "description": "Flagship smartphone with 200MP camera, S Pen, 5000mAh battery, and stunning AMOLED display.",
+    "price_cents": 119999,
+    "currency": "USD",
+    "sku": "SGS24U-256-BLK",
+    "image_url": "https://source.unsplash.com/featured/?smartphone,samsung",
+    "category": "Electronics",
+    "tags": ["smartphone", "android", "5g", "flagship"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 25,
+      "STORE_002": 15,
+      "STORE_003": 10
+    }
+  },
+  {
+    "title": "MacBook Pro 14-inch M3 Pro 512GB",
+    "description": "Professional laptop with M3 Pro chip, 18GB RAM, Liquid Retina XDR display, and all-day battery life.",
+    "price_cents": 199999,
+    "currency": "USD",
+    "sku": "MBP14-M3P-512",
+    "image_url": "https://source.unsplash.com/featured/?macbook,laptop",
+    "category": "Electronics",
+    "tags": ["laptop", "apple", "macbook", "professional"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 12,
+      "STORE_002": 8,
+      "STORE_003": 5
+    }
+  },
+  {
+    "title": "Sony WH-1000XM5 Wireless Headphones - Silver",
+    "description": "Industry-leading noise cancellation, exceptional sound quality, 30-hour battery life.",
+    "price_cents": 39999,
+    "currency": "USD",
+    "sku": "SONY-WH1000XM5-SLV",
+    "image_url": "https://source.unsplash.com/featured/?sony,headphones",
+    "category": "Electronics",
+    "tags": ["audio", "wireless", "noise-cancelling", "premium"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 30,
+      "STORE_002": 25,
+      "STORE_003": 15
+    }
+  },
+  {
+    "title": "iPad Air 11-inch M2 128GB WiFi - Starlight",
+    "description": "Powerful tablet with M2 chip, stunning Liquid Retina display, Apple Pencil Pro support.",
+    "price_cents": 59999,
+    "currency": "USD",
+    "sku": "IPAD-AIR-M2-128-STR",
+    "image_url": "https://source.unsplash.com/featured/?ipad,tablet",
+    "category": "Electronics",
+    "tags": ["tablet", "apple", "ipad", "creativity"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 40,
+      "STORE_002": 30,
+      "STORE_003": 20
+    }
+  },
+  {
+    "title": "Anker PowerCore 20000mAh Power Bank",
+    "description": "High-capacity portable charger with dual USB ports and fast charging technology.",
+    "price_cents": 4999,
+    "currency": "USD",
+    "sku": "ANK-PC20K-BLK",
+    "image_url": "https://source.unsplash.com/featured/?powerbank,charger",
+    "category": "Accessories",
+    "tags": ["power-bank", "portable", "charging", "travel"],
+    "is_quick_item": true,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 150,
+      "STORE_002": 120,
+      "STORE_003": 80
+    }
+  },
+  {
+    "title": "Nike Air Max 270 Running Shoes - Black/White (Size 10)",
+    "description": "Comfortable running shoes with Max Air cushioning and breathable mesh upper.",
+    "price_cents": 14999,
+    "currency": "USD",
+    "sku": "NIKE-AM270-BW-10",
+    "image_url": "https://source.unsplash.com/featured/?nike,shoes",
+    "category": "Fashion",
+    "tags": ["shoes", "sneakers", "running", "athletic"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 25,
+      "STORE_002": 30,
+      "STORE_003": 20
+    }
+  },
+  {
+    "title": "Levi's 501 Original Fit Jeans - Dark Wash (32x32)",
+    "description": "Classic straight-leg jeans with button fly, made from premium denim.",
+    "price_cents": 6999,
+    "currency": "USD",
+    "sku": "LEVI-501-DRK-3232",
+    "image_url": "https://source.unsplash.com/featured/?jeans,denim",
+    "category": "Fashion",
+    "tags": ["jeans", "denim", "classic", "casual"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 35,
+      "STORE_002": 40,
+      "STORE_003": 25
+    }
+  },
+  {
+    "title": "Ray-Ban Aviator Classic Sunglasses - Gold/Green",
+    "description": "Iconic aviator sunglasses with metal frame and classic green G-15 lenses.",
+    "price_cents": 17999,
+    "currency": "USD",
+    "sku": "RB-AV3025-GLD-GRN",
+    "image_url": "https://source.unsplash.com/featured/?sunglasses,rayban",
+    "category": "Accessories",
+    "tags": ["sunglasses", "eyewear", "classic", "uv-protection"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 45,
+      "STORE_002": 50,
+      "STORE_003": 30
+    }
+  },
+  {
+    "title": "Adidas Ultraboost 23 Running Shoes - Core Black (Size 9)",
+    "description": "High-performance running shoes with responsive Boost cushioning and Primeknit upper.",
+    "price_cents": 18999,
+    "currency": "USD",
+    "sku": "ADI-UB23-BLK-9",
+    "image_url": "https://source.unsplash.com/featured/?adidas,running",
+    "category": "Fashion",
+    "tags": ["shoes", "running", "performance", "boost"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 20,
+      "STORE_002": 25,
+      "STORE_003": 15
+    }
+  },
+  {
+    "title": "Patagonia Better Sweater Fleece Jacket - Navy (L)",
+    "description": "Warm and comfortable fleece jacket with classic style and eco-friendly materials.",
+    "price_cents": 13999,
+    "currency": "USD",
+    "sku": "PAT-BSW-NVY-L",
+    "image_url": "https://source.unsplash.com/featured/?fleece,jacket",
+    "category": "Fashion",
+    "tags": ["jacket", "fleece", "outdoor", "sustainable"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 30,
+      "STORE_002": 35,
+      "STORE_003": 20
+    }
+  },
+  {
+    "title": "IKEA Lack Coffee Table - White",
+    "description": "Simple and modern coffee table with clean lines, easy to assemble.",
+    "price_cents": 3999,
+    "currency": "USD",
+    "sku": "IKEA-LACK-WHT",
+    "image_url": "https://source.unsplash.com/featured/?coffee-table,modern",
+    "category": "Home",
+    "tags": ["furniture", "table", "modern", "minimalist"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 40,
+      "STORE_002": 35,
+      "STORE_003": 25
+    }
+  },
+  {
+    "title": "Philips Hue White and Color Ambiance Bulb (4-Pack)",
+    "description": "Smart LED bulbs with 16 million colors, voice control, and scheduling features.",
+    "price_cents": 19999,
+    "currency": "USD",
+    "sku": "PHIL-HUE-4PK",
+    "image_url": "https://source.unsplash.com/featured/?smart-bulb,led",
+    "category": "Home",
+    "tags": ["smart-home", "lighting", "led", "automation"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 60,
+      "STORE_002": 55,
+      "STORE_003": 40
+    }
+  },
+  {
+    "title": "Dyson V15 Detect Cordless Vacuum Cleaner",
+    "description": "Powerful cordless vacuum with laser dust detection and LCD screen showing particle count.",
+    "price_cents": 69999,
+    "currency": "USD",
+    "sku": "DYSON-V15-DET",
+    "image_url": "https://source.unsplash.com/featured/?vacuum,dyson",
+    "category": "Home",
+    "tags": ["vacuum", "cordless", "cleaning", "technology"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 15,
+      "STORE_002": 12,
+      "STORE_003": 8
+    }
+  },
+  {
+    "title": "KitchenAid Artisan Stand Mixer 5qt - Empire Red",
+    "description": "Iconic stand mixer with 10 speeds, tilt-head design, and powerful motor for all baking needs.",
+    "price_cents": 44999,
+    "currency": "USD",
+    "sku": "KA-ART-5QT-RED",
+    "image_url": "https://source.unsplash.com/featured/?mixer,kitchen",
+    "category": "Home",
+    "tags": ["kitchen", "appliance", "baking", "mixer"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 20,
+      "STORE_002": 18,
+      "STORE_003": 12
+    }
+  },
+  {
+    "title": "Casper Original Foam Mattress - Queen",
+    "description": "Premium foam mattress with zoned support and cooling technology for comfortable sleep.",
+    "price_cents": 99999,
+    "currency": "USD",
+    "sku": "CASP-ORIG-QN",
+    "image_url": "https://source.unsplash.com/featured/?mattress,bedroom",
+    "category": "Home",
+    "tags": ["mattress", "bedding", "sleep", "comfort"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 10,
+      "STORE_002": 8,
+      "STORE_003": 5
+    }
+  },
+  {
+    "title": "The Ordinary Niacinamide 10% + Zinc 1% Serum",
+    "description": "High-strength vitamin and mineral serum for blemish-prone skin, reduces appearance of pores.",
+    "price_cents": 699,
+    "currency": "USD",
+    "sku": "TO-NIA10-30ML",
+    "image_url": "https://source.unsplash.com/featured/?skincare,serum",
+    "category": "Beauty",
+    "tags": ["skincare", "serum", "niacinamide", "beauty"],
+    "is_quick_item": true,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 180,
+      "STORE_002": 200,
+      "STORE_003": 150
+    }
+  },
+  {
+    "title": "CeraVe Hydrating Facial Cleanser 16oz",
+    "description": "Gentle, non-foaming cleanser with ceramides and hyaluronic acid for normal to dry skin.",
+    "price_cents": 1599,
+    "currency": "USD",
+    "sku": "CERA-HYD-16OZ",
+    "image_url": "https://source.unsplash.com/featured/?cleanser,skincare",
+    "category": "Beauty",
+    "tags": ["cleanser", "skincare", "hydrating", "sensitive-skin"],
+    "is_quick_item": true,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 220,
+      "STORE_002": 190,
+      "STORE_003": 160
+    }
+  },
+  {
+    "title": "Fenty Beauty Pro Filt'r Soft Matte Foundation - 290",
+    "description": "Long-wearing, soft matte foundation with buildable medium to full coverage.",
+    "price_cents": 3999,
+    "currency": "USD",
+    "sku": "FENTY-FOUND-290",
+    "image_url": "https://source.unsplash.com/featured/?foundation,makeup",
+    "category": "Beauty",
+    "tags": ["makeup", "foundation", "fenty", "matte"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 75,
+      "STORE_002": 80,
+      "STORE_003": 60
+    }
+  },
+  {
+    "title": "Urban Decay Naked3 Eyeshadow Palette",
+    "description": "12 rose-hued neutral eyeshadows with buttery texture and high pigmentation.",
+    "price_cents": 5400,
+    "currency": "USD",
+    "sku": "UD-NAK3-PAL",
+    "image_url": "https://source.unsplash.com/featured/?eyeshadow,palette",
+    "category": "Beauty",
+    "tags": ["makeup", "eyeshadow", "palette", "neutral"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 50,
+      "STORE_002": 55,
+      "STORE_003": 40
+    }
+  },
+  {
+    "title": "Dyson Airwrap Complete Hair Styler",
+    "description": "Multi-styler that curls, waves, smooths, and dries with no extreme heat.",
+    "price_cents": 59999,
+    "currency": "USD",
+    "sku": "DYSON-AWRAP-COMP",
+    "image_url": "https://source.unsplash.com/featured/?hair-styler,dyson",
+    "category": "Beauty",
+    "tags": ["hair", "styling", "dyson", "professional"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 12,
+      "STORE_002": 10,
+      "STORE_003": 8
+    }
+  },
+  {
+    "title": "Wilson Evolution Indoor Basketball",
+    "description": "Official size and weight basketball with microfiber composite leather cover.",
+    "price_cents": 6999,
+    "currency": "USD",
+    "sku": "WILS-EVO-BB",
+    "image_url": "https://source.unsplash.com/featured/?basketball",
+    "category": "Sports",
+    "tags": ["basketball", "sports", "wilson", "indoor"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 40,
+      "STORE_002": 45,
+      "STORE_003": 30
+    }
+  },
+  {
+    "title": "Spalding NBA Official Game Basketball",
+    "description": "Authentic NBA game ball with full-grain leather construction.",
+    "price_cents": 16999,
+    "currency": "USD",
+    "sku": "SPAL-NBA-OFF",
+    "image_url": "https://source.unsplash.com/featured/?nba,basketball",
+    "category": "Sports",
+    "tags": ["basketball", "nba", "official", "leather"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 25,
+      "STORE_002": 20,
+      "STORE_003": 15
+    }
+  },
+  {
+    "title": "Yeti Rambler 30oz Tumbler with MagSlider Lid",
+    "description": "Vacuum-insulated stainless steel tumbler keeps drinks cold or hot for hours.",
+    "price_cents": 3999,
+    "currency": "USD",
+    "sku": "YETI-RAM-30OZ",
+    "image_url": "https://source.unsplash.com/featured/?tumbler,yeti",
+    "category": "Sports",
+    "tags": ["tumbler", "drinkware", "insulated", "outdoor"],
+    "is_quick_item": true,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 100,
+      "STORE_002": 90,
+      "STORE_003": 70
+    }
+  },
+  {
+    "title": "Fitbit Charge 6 Fitness Tracker - Black",
+    "description": "Advanced fitness tracker with heart rate monitoring, GPS, and Google integration.",
+    "price_cents": 15999,
+    "currency": "USD",
+    "sku": "FIT-CHG6-BLK",
+    "image_url": "https://source.unsplash.com/featured/?fitbit,fitness",
+    "category": "Sports",
+    "tags": ["fitness", "tracker", "wearable", "health"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 55,
+      "STORE_002": 50,
+      "STORE_003": 35
+    }
+  },
+  {
+    "title": "LEGO Star Wars Millennium Falcon (75192)",
+    "description": "Ultimate collector series model with 7,541 pieces and incredible detail.",
+    "price_cents": 84999,
+    "currency": "USD",
+    "sku": "LEGO-SW-75192",
+    "image_url": "https://source.unsplash.com/featured/?lego,starwars",
+    "category": "Toys",
+    "tags": ["lego", "star-wars", "collectible", "building"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 8,
+      "STORE_002": 6,
+      "STORE_003": 4
+    }
+  },
+  {
+    "title": "Nintendo Switch OLED Model - Neon",
+    "description": "Enhanced Switch console with vibrant 7-inch OLED screen and improved audio.",
+    "price_cents": 34999,
+    "currency": "USD",
+    "sku": "NSW-OLED-NEON",
+    "image_url": "https://source.unsplash.com/featured/?nintendo,switch",
+    "category": "Toys",
+    "tags": ["gaming", "console", "nintendo", "handheld"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 30,
+      "STORE_002": 25,
+      "STORE_003": 20
+    }
+  },
+  {
+    "title": "Barbie Dreamhouse with Pool and Slide",
+    "description": "Three-story dollhouse with 10 play areas, furniture, and transforming features.",
+    "price_cents": 19999,
+    "currency": "USD",
+    "sku": "BARB-DREAM-HOUSE",
+    "image_url": "https://source.unsplash.com/featured/?barbie,dollhouse",
+    "category": "Toys",
+    "tags": ["barbie", "dollhouse", "kids", "play"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 35,
+      "STORE_002": 30,
+      "STORE_003": 25
+    }
+  },
+  {
+    "title": "Hot Wheels 20-Car Gift Pack",
+    "description": "Variety pack of 20 die-cast cars in 1:64 scale with assorted designs.",
+    "price_cents": 2499,
+    "currency": "USD",
+    "sku": "HW-20CAR-PACK",
+    "image_url": "https://source.unsplash.com/featured/?hotwheels,cars",
+    "category": "Toys",
+    "tags": ["hotwheels", "cars", "collectible", "kids"],
+    "is_quick_item": true,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 120,
+      "STORE_002": 110,
+      "STORE_003": 90
+    }
+  },
+  {
+    "title": "PlayStation 5 Slim Digital Edition",
+    "description": "Next-gen gaming console with lightning-fast SSD and stunning graphics capabilities.",
+    "price_cents": 44999,
+    "currency": "USD",
+    "sku": "PS5-SLIM-DIG",
+    "image_url": "https://source.unsplash.com/featured/?playstation,gaming",
+    "category": "Toys",
+    "tags": ["gaming", "console", "playstation", "next-gen"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 20,
+      "STORE_002": 15,
+      "STORE_003": 12
+    }
+  },
+  {
+    "title": "Starbucks Pike Place Roast Ground Coffee 20oz",
+    "description": "Smooth and balanced medium roast coffee with rich, approachable taste.",
+    "price_cents": 1299,
+    "currency": "USD",
+    "sku": "SB-PIKE-20OZ",
+    "image_url": "https://source.unsplash.com/featured/?coffee,starbucks",
+    "category": "Grocery",
+    "tags": ["coffee", "ground", "medium-roast", "starbucks"],
+    "is_quick_item": true,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 180,
+      "STORE_002": 200,
+      "STORE_003": 150
+    }
+  },
+  {
+    "title": "Nature Valley Crunchy Granola Bars Variety Pack (48 bars)",
+    "description": "Wholesome granola bars made with whole grain oats in assorted flavors.",
+    "price_cents": 1899,
+    "currency": "USD",
+    "sku": "NV-GRAN-VAR-48",
+    "image_url": "https://source.unsplash.com/featured/?granola,bars",
+    "category": "Grocery",
+    "tags": ["snacks", "granola", "healthy", "variety"],
+    "is_quick_item": true,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 250,
+      "STORE_002": 220,
+      "STORE_003": 180
+    }
+  },
+  {
+    "title": "Coca-Cola Classic 12oz Cans (24-Pack)",
+    "description": "Refreshing carbonated soft drink in convenient 12-ounce cans.",
+    "price_cents": 899,
+    "currency": "USD",
+    "sku": "COKE-12OZ-24PK",
+    "image_url": "https://source.unsplash.com/featured/?coca-cola,soda",
+    "category": "Grocery",
+    "tags": ["beverage", "soda", "coke", "refreshing"],
+    "is_quick_item": true,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 300,
+      "STORE_002": 280,
+      "STORE_003": 240
+    }
+  },
+  {
+    "title": "Nutella Hazelnut Spread 26.5oz Jar",
+    "description": "Delicious chocolate hazelnut spread perfect for breakfast or snacking.",
+    "price_cents": 799,
+    "currency": "USD",
+    "sku": "NUT-265OZ-JAR",
+    "image_url": "https://source.unsplash.com/featured/?nutella,chocolate",
+    "category": "Grocery",
+    "tags": ["spread", "chocolate", "hazelnut", "breakfast"],
+    "is_quick_item": true,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 200,
+      "STORE_002": 180,
+      "STORE_003": 160
+    }
+  },
+  {
+    "title": "Clif Bar Energy Bars Variety Pack (24 bars)",
+    "description": "Organic energy bars with protein and whole grains for active lifestyles.",
+    "price_cents": 2499,
+    "currency": "USD",
+    "sku": "CLIF-VAR-24PK",
+    "image_url": "https://source.unsplash.com/featured/?energy-bar,nutrition",
+    "category": "Grocery",
+    "tags": ["energy-bar", "protein", "organic", "sports-nutrition"],
+    "is_quick_item": true,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 150,
+      "STORE_002": 140,
+      "STORE_003": 120
+    }
+  },
+  {
+    "title": "Pilot G2 Premium Gel Pens 0.7mm Black (12-Pack)",
+    "description": "Smooth-writing gel pens with comfortable grip and vibrant ink.",
+    "price_cents": 1599,
+    "currency": "USD",
+    "sku": "PILOT-G2-BLK-12",
+    "image_url": "https://source.unsplash.com/featured/?pens,office",
+    "category": "Office",
+    "tags": ["pens", "stationery", "office", "writing"],
+    "is_quick_item": true,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 200,
+      "STORE_002": 180,
+      "STORE_003": 150
+    }
+  },
+  {
+    "title": "Post-it Notes Super Sticky 3x3 Assorted Colors (24 pads)",
+    "description": "Reliable sticky notes that stick securely and remove cleanly.",
+    "price_cents": 2299,
+    "currency": "USD",
+    "sku": "POST-3X3-AST-24",
+    "image_url": "https://source.unsplash.com/featured/?post-it,notes",
+    "category": "Office",
+    "tags": ["sticky-notes", "office", "organization", "post-it"],
+    "is_quick_item": true,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 180,
+      "STORE_002": 200,
+      "STORE_003": 160
+    }
+  },
+  {
+    "title": "Staples 20lb Copy Paper 8.5x11 - 10 Ream Case",
+    "description": "Bright white multipurpose paper for everyday printing and copying.",
+    "price_cents": 4999,
+    "currency": "USD",
+    "sku": "STAP-COPY-10RM",
+    "image_url": "https://source.unsplash.com/featured/?paper,office",
+    "category": "Office",
+    "tags": ["paper", "printing", "office", "supplies"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 100,
+      "STORE_002": 90,
+      "STORE_003": 80
+    }
+  },
+  {
+    "title": "Logitech MX Master 3S Wireless Mouse - Graphite",
+    "description": "Advanced wireless mouse with precision tracking and customizable buttons.",
+    "price_cents": 9999,
+    "currency": "USD",
+    "sku": "LOGI-MXM3S-GRA",
+    "image_url": "https://source.unsplash.com/featured/?mouse,logitech",
+    "category": "Office",
+    "tags": ["mouse", "wireless", "ergonomic", "productivity"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 60,
+      "STORE_002": 55,
+      "STORE_003": 40
+    }
+  },
+  {
+    "title": "Moleskine Classic Notebook Large Ruled - Black",
+    "description": "Premium hardcover notebook with ivory-colored ruled pages and elastic closure.",
+    "price_cents": 2199,
+    "currency": "USD",
+    "sku": "MOSK-CLAS-LRG-BLK",
+    "image_url": "https://source.unsplash.com/featured/?notebook,moleskine",
+    "category": "Office",
+    "tags": ["notebook", "journal", "stationery", "premium"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 120,
+      "STORE_002": 110,
+      "STORE_003": 90
+    }
+  },
+  {
+    "title": "Herman Miller Aeron Chair Size B - Graphite",
+    "description": "Iconic ergonomic office chair with PostureFit support and breathable mesh.",
+    "price_cents": 169500,
+    "currency": "USD",
+    "sku": "HM-AERON-B-GRA",
+    "image_url": "https://source.unsplash.com/featured/?office-chair,ergonomic",
+    "category": "Office",
+    "tags": ["chair", "ergonomic", "office", "premium"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 10,
+      "STORE_002": 8,
+      "STORE_003": 6
+    }
+  },
+  {
+    "title": "HP DeskJet 4155e All-in-One Wireless Printer",
+    "description": "Compact wireless printer with scan, copy, and mobile printing capabilities.",
+    "price_cents": 9999,
+    "currency": "USD",
+    "sku": "HP-DJ4155E-AIO",
+    "image_url": "https://source.unsplash.com/featured/?printer,hp",
+    "category": "Office",
+    "tags": ["printer", "wireless", "all-in-one", "home-office"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 35,
+      "STORE_002": 30,
+      "STORE_003": 25
+    }
+  },
+  {
+    "title": "Samsung 27-inch 4K UHD Monitor - Flat",
+    "description": "Ultra HD monitor with vibrant colors, HDR support, and slim bezel design.",
+    "price_cents": 34999,
+    "currency": "USD",
+    "sku": "SAM-27-4K-FLT",
+    "image_url": "https://source.unsplash.com/featured/?monitor,4k",
+    "category": "Electronics",
+    "tags": ["monitor", "4k", "display", "productivity"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 25,
+      "STORE_002": 22,
+      "STORE_003": 18
+    }
+  },
+  {
+    "title": "Bose SoundLink Flex Bluetooth Speaker - Stone Blue",
+    "description": "Portable waterproof speaker with clear sound and 12-hour battery life.",
+    "price_cents": 14999,
+    "currency": "USD",
+    "sku": "BOSE-SLF-STBLU",
+    "image_url": "https://source.unsplash.com/featured/?bluetooth,speaker",
+    "category": "Electronics",
+    "tags": ["speaker", "bluetooth", "portable", "waterproof"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 70,
+      "STORE_002": 65,
+      "STORE_003": 50
+    }
+  },
+  {
+    "title": "Apple AirPods Pro (2nd Generation) with MagSafe",
+    "description": "Wireless earbuds with active noise cancellation and spatial audio.",
+    "price_cents": 24999,
+    "currency": "USD",
+    "sku": "APL-APRO2-MAG",
+    "image_url": "https://source.unsplash.com/featured/?airpods,apple",
+    "category": "Electronics",
+    "tags": ["earbuds", "wireless", "noise-cancelling", "apple"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 80,
+      "STORE_002": 75,
+      "STORE_003": 60
+    }
+  },
+  {
+    "title": "GoPro HERO12 Black Action Camera",
+    "description": "Rugged 5.3K action camera with HyperSmooth stabilization and waterproof design.",
+    "price_cents": 39999,
+    "currency": "USD",
+    "sku": "GP-H12-BLK",
+    "image_url": "https://source.unsplash.com/featured/?gopro,camera",
+    "category": "Electronics",
+    "tags": ["camera", "action", "waterproof", "4k"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 30,
+      "STORE_002": 25,
+      "STORE_003": 20
+    }
+  },
+  {
+    "title": "Amazon Echo Dot (5th Gen) Smart Speaker - Charcoal",
+    "description": "Compact smart speaker with Alexa, improved sound quality, and smart home control.",
+    "price_cents": 4999,
+    "currency": "USD",
+    "sku": "AMZ-EDOT5-CHR",
+    "image_url": "https://source.unsplash.com/featured/?echo-dot,alexa",
+    "category": "Electronics",
+    "tags": ["smart-speaker", "alexa", "smart-home", "voice-control"],
+    "is_quick_item": true,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 150,
+      "STORE_002": 140,
+      "STORE_003": 110
+    }
+  },
+  {
+    "title": "Canon EOS R6 Mark II Mirrorless Camera Body",
+    "description": "Full-frame mirrorless camera with 24.2MP sensor, 4K 60p video, and advanced autofocus.",
+    "price_cents": 249999,
+    "currency": "USD",
+    "sku": "CAN-R6M2-BODY",
+    "image_url": "https://source.unsplash.com/featured/?canon,camera",
+    "category": "Electronics",
+    "tags": ["camera", "mirrorless", "full-frame", "professional"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 8,
+      "STORE_002": 6,
+      "STORE_003": 4
+    }
+  },
+  {
+    "title": "Kindle Paperwhite (16GB) - Black",
+    "description": "Waterproof e-reader with 6.8-inch glare-free display and adjustable warm light.",
+    "price_cents": 14999,
+    "currency": "USD",
+    "sku": "AMZ-KPW-16GB-BLK",
+    "image_url": "https://source.unsplash.com/featured/?kindle,ereader",
+    "category": "Electronics",
+    "tags": ["ereader", "kindle", "reading", "waterproof"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 60,
+      "STORE_002": 55,
+      "STORE_003": 45
+    }
+  },
+  {
+    "title": "Roku Streaming Stick 4K",
+    "description": "Compact streaming device with 4K HDR support and voice remote with TV controls.",
+    "price_cents": 4999,
+    "currency": "USD",
+    "sku": "ROKU-STK4K",
+    "image_url": "https://source.unsplash.com/featured/?roku,streaming",
+    "category": "Electronics",
+    "tags": ["streaming", "4k", "roku", "entertainment"],
+    "is_quick_item": true,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 130,
+      "STORE_002": 120,
+      "STORE_003": 100
+    }
+  },
+  {
+    "title": "Tile Pro Bluetooth Tracker (4-Pack)",
+    "description": "High-performance item tracker with 400ft range and replaceable battery.",
+    "price_cents": 9999,
+    "currency": "USD",
+    "sku": "TILE-PRO-4PK",
+    "image_url": "https://source.unsplash.com/featured/?tracker,bluetooth",
+    "category": "Accessories",
+    "tags": ["tracker", "bluetooth", "finder", "keys"],
+    "is_quick_item": true,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 110,
+      "STORE_002": 100,
+      "STORE_003": 85
+    }
+  },
+  {
+    "title": "Patagonia Nano Puff Jacket - Black (M)",
+    "description": "Lightweight insulated jacket with warm synthetic insulation and recycled materials.",
+    "price_cents": 22999,
+    "currency": "USD",
+    "sku": "PAT-NPUF-BLK-M",
+    "image_url": "https://source.unsplash.com/featured/?jacket,outdoor",
+    "category": "Fashion",
+    "tags": ["jacket", "insulated", "outdoor", "lightweight"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 28,
+      "STORE_002": 32,
+      "STORE_003": 20
+    }
+  },
+  {
+    "title": "Carhartt Men's Acrylic Watch Hat - Carhartt Brown",
+    "description": "Classic knit beanie made from stretchable rib-knit fabric with Carhartt label.",
+    "price_cents": 1999,
+    "currency": "USD",
+    "sku": "CARH-WHT-BRN",
+    "image_url": "https://source.unsplash.com/featured/?beanie,winter",
+    "category": "Fashion",
+    "tags": ["beanie", "winter", "hat", "workwear"],
+    "is_quick_item": true,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 90,
+      "STORE_002": 85,
+      "STORE_003": 70
+    }
+  },
+  {
+    "title": "Hydro Flask 32oz Wide Mouth Water Bottle - Pacific",
+    "description": "Insulated stainless steel water bottle keeps drinks cold for 24 hours.",
+    "price_cents": 4499,
+    "currency": "USD",
+    "sku": "HYD-32WM-PAC",
+    "image_url": "https://source.unsplash.com/featured/?water-bottle,hydro",
+    "category": "Sports",
+    "tags": ["water-bottle", "insulated", "hydration", "outdoor"],
+    "is_quick_item": true,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 140,
+      "STORE_002": 130,
+      "STORE_003": 110
+    }
+  },
+  {
+    "title": "Coleman Sundome 4-Person Camping Tent",
+    "description": "Easy setup dome tent with WeatherTec system for dry camping experience.",
+    "price_cents": 7999,
+    "currency": "USD",
+    "sku": "COLE-SDOME-4P",
+    "image_url": "https://source.unsplash.com/featured/?tent,camping",
+    "category": "Sports",
+    "tags": ["tent", "camping", "outdoor", "4-person"],
+    "is_quick_item": false,
+    "seller_email": "seller1@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 22,
+      "STORE_002": 18,
+      "STORE_003": 15
+    }
+  },
+  {
+    "title": "Instant Pot Duo Plus 6 Quart 9-in-1 Pressure Cooker",
+    "description": "Multi-functional electric pressure cooker with 9 cooking programs.",
+    "price_cents": 12999,
+    "currency": "USD",
+    "sku": "IP-DUOP-6QT",
+    "image_url": "https://source.unsplash.com/featured/?instant-pot,cooking",
+    "category": "Home",
+    "tags": ["pressure-cooker", "instant-pot", "kitchen", "multi-cooker"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 45,
+      "STORE_002": 40,
+      "STORE_003": 35
+    }
+  },
+  {
+    "title": "Roomba j7+ Self-Emptying Robot Vacuum",
+    "description": "Smart robot vacuum with obstacle avoidance and automatic dirt disposal.",
+    "price_cents": 79999,
+    "currency": "USD",
+    "sku": "ROOM-J7PLUS",
+    "image_url": "https://source.unsplash.com/featured/?roomba,robot-vacuum",
+    "category": "Home",
+    "tags": ["robot-vacuum", "smart-home", "cleaning", "automation"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 18,
+      "STORE_002": 15,
+      "STORE_003": 12
+    }
+  },
+  {
+    "title": "Ninja Professional Blender 1000W - Black",
+    "description": "Powerful blender with Total Crushing Technology for ice, smoothies, and more.",
+    "price_cents": 9999,
+    "currency": "USD",
+    "sku": "NINJ-PRO-1000-BLK",
+    "image_url": "https://source.unsplash.com/featured/?blender,kitchen",
+    "category": "Home",
+    "tags": ["blender", "kitchen", "smoothies", "powerful"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 55,
+      "STORE_002": 50,
+      "STORE_003": 40
+    }
+  },
+  {
+    "title": "Keurig K-Elite Single Serve Coffee Maker - Brushed Slate",
+    "description": "Premium single-serve coffee maker with strong brew and iced coffee settings.",
+    "price_cents": 16999,
+    "currency": "USD",
+    "sku": "KEUR-KELIT-SLT",
+    "image_url": "https://source.unsplash.com/featured/?keurig,coffee-maker",
+    "category": "Home",
+    "tags": ["coffee-maker", "keurig", "single-serve", "kitchen"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 38,
+      "STORE_002": 35,
+      "STORE_003": 28
+    }
+  },
+  {
+    "title": "Bissell CrossWave Pet Pro Multi-Surface Cleaner",
+    "description": "Wet-dry vacuum that vacuums and washes floors simultaneously, pet-optimized.",
+    "price_cents": 29999,
+    "currency": "USD",
+    "sku": "BISS-CWP-PRO",
+    "image_url": "https://source.unsplash.com/featured/?vacuum,floor-cleaner",
+    "category": "Home",
+    "tags": ["vacuum", "mop", "pet", "cleaning"],
+    "is_quick_item": false,
+    "seller_email": "seller3@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 32,
+      "STORE_002": 28,
+      "STORE_003": 22
+    }
+  },
+  {
+    "title": "Lululemon Align High-Rise Pant 25\" - Black (Size 6)",
+    "description": "Buttery-soft yoga pants with Nulu fabric, four-way stretch, and hidden pocket.",
+    "price_cents": 9800,
+    "currency": "USD",
+    "sku": "LULU-ALIGN-BLK-6",
+    "image_url": "https://source.unsplash.com/featured/?yoga-pants,lululemon",
+    "category": "Fashion",
+    "tags": ["yoga", "leggings", "activewear", "women"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 40,
+      "STORE_002": 45,
+      "STORE_003": 35
+    }
+  },
+  {
+    "title": "The North Face Borealis Backpack - TNF Black",
+    "description": "Versatile daypack with laptop sleeve, FlexVent suspension, and external bungee.",
+    "price_cents": 9900,
+    "currency": "USD",
+    "sku": "TNF-BOR-BLK",
+    "image_url": "https://source.unsplash.com/featured/?backpack,northface",
+    "category": "Accessories",
+    "tags": ["backpack", "outdoor", "laptop", "school"],
+    "is_quick_item": false,
+    "seller_email": "seller2@myshop.test",
+    "initial_stock_by_store": {
+      "STORE_001": 50,
+      "STORE_002": 55,
+      "STORE_003": 40
+    }
+  }
+]

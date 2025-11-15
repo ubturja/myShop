@@ -1,0 +1,23 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+        - routes
+        - config
+        - database
+    
+    level: 6
+    
+    # Ignore common Laravel patterns
+    excludePaths:
+        - bootstrap
+        - storage
+        - vendor
+    
+    # Ignore errors from migrations (dynamic schema)
+    ignoreErrors:
+        - '#Call to an undefined method Illuminate\\Database\\Schema\\Blueprint::#'
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::#'
+        - '#Property .+ does not accept null#'

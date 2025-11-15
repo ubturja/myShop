@@ -1,0 +1,180 @@
+name: K6 Performance Tests
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  k6-tests:
+    name: Run K6 Load Tests
+    runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: myshop_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo, pdo_mysql, redis
+          coverage: none
+
+      - name: Install Composer dependencies
+        working-directory: ./backend
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Copy .env.example to .env
+        working-directory: ./backend
+        run: cp .env.example .env
+
+      - name: Configure environment
+        working-directory: ./backend
+        run: |
+          php artisan key:generate
+          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=myshop_test/' .env
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/' .env
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' .env
+
+      - name: Run database migrations
+        working-directory: ./backend
+        run: php artisan migrate --force
+
+      - name: Seed database
+        working-directory: ./backend
+        run: php artisan db:seed --force
+
+      - name: Start Laravel server
+        working-directory: ./backend
+        run: php artisan serve --port=8000 &
+        env:
+          APP_ENV: testing
+
+      - name: Wait for server
+        run: |
+          timeout 30 bash -c 'until curl -f http://localhost:8000/api/health 2>/dev/null; do sleep 1; done'
+
+      - name: Setup k6
+        uses: grafana/setup-k6-action@v1
+        with:
+          k6-version: latest
+
+      - name: Run k6 smoke tests
+        run: |
+          k6 run --vus 1 --duration 30s \
+            -e BASE_URL=http://localhost:8000 \
+            k6/auth.test.js
+
+      - name: Run k6 products test
+        run: |
+          k6 run -e BASE_URL=http://localhost:8000 k6/products.test.js
+
+      - name: Run k6 cart test
+        run: |
+          k6 run -e BASE_URL=http://localhost:8000 k6/cart.test.js
+
+      - name: Run k6 group buy test
+        run: |
+          k6 run -e BASE_URL=http://localhost:8000 k6/group-buy.test.js
+
+      - name: Run k6 gamification test
+        run: |
+          k6 run -e BASE_URL=http://localhost:8000 k6/gamification.test.js
+
+      - name: Upload k6 results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-results
+          path: k6/results/
+          retention-days: 30
+
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let comment = '## 🚀 K6 Performance Test Results\n\n';
+            
+            try {
+              const tests = ['auth', 'products', 'cart', 'group-buy', 'gamification'];
+              
+              for (const test of tests) {
+                const summaryPath = `k6/results/${test}_summary.json`;
+                if (fs.existsSync(summaryPath)) {
+                  const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf8'));
+                  comment += `### ${test}\n`;
+                  comment += `- ✓ Requests: ${summary.metrics.http_reqs.values.count}\n`;
+                  comment += `- ✓ Duration (p95): ${summary.metrics.http_req_duration.values['p(95)']}ms\n`;
+                  comment += `- ✓ Failed: ${summary.metrics.http_req_failed.values.rate * 100}%\n\n`;
+                }
+              }
+            } catch (error) {
+              comment += '⚠️ Could not parse test results\n';
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+  performance-baseline:
+    name: Performance Baseline Check
+    runs-on: ubuntu-latest
+    needs: k6-tests
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Download results
+        uses: actions/download-artifact@v4
+        with:
+          name: k6-results
+          path: k6/results/
+
+      - name: Check performance thresholds
+        run: |
+          echo "Checking performance against baseline..."
+          # Add custom threshold checking logic here
+          # Compare against previous runs stored in repo or external storage
+          
+          # Example: Check if p95 response time is under 500ms
+          if [ -f "k6/results/products_summary.json" ]; then
+            p95=$(jq -r '.metrics.http_req_duration.values["p(95)"]' k6/results/products_summary.json)
+            if (( $(echo "$p95 > 500" | bc -l) )); then
+              echo "❌ Performance regression detected: p95 = ${p95}ms (threshold: 500ms)"
+              exit 1
+            else
+              echo "✅ Performance within acceptable range: p95 = ${p95}ms"
+            fi
+          fi

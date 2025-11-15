@@ -1,0 +1,25 @@
+{
+  "name": "myshop-web3-service",
+  "version": "1.0.0",
+  "description": "Web3 microservice for myShop blockchain operations",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node app.js",
+    "start": "node app.js",
+    "lint": "eslint .",
+    "test": "echo 'TODO: Add Hardhat tests' && exit 0"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ethers": "^6.9.0",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.1",
+    "hardhat": "^2.19.2",
+    "eslint": "^8.55.0"
+  }
+}

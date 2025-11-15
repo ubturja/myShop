@@ -1,0 +1,51 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background -->
+  <rect width="800" height="600" fill="#0a0a0f"/>
+  
+  <!-- Neon grid pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00eaff" stroke-width="0.5" opacity="0.2"/>
+    </pattern>
+    
+    <!-- Neon glow filter -->
+    <filter id="neon-glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Grid background -->
+  <rect width="800" height="600" fill="url(#grid)"/>
+  
+  <!-- Neon border -->
+  <rect x="10" y="10" width="780" height="580" fill="none" stroke="#00eaff" stroke-width="2" filter="url(#neon-glow)"/>
+  
+  <!-- Corner brackets -->
+  <path d="M 50 50 L 20 50 L 20 20 L 50 20" stroke="#ff00ff" stroke-width="3" fill="none" filter="url(#neon-glow)"/>
+  <path d="M 750 50 L 780 50 L 780 20 L 750 20" stroke="#ff00ff" stroke-width="3" fill="none" filter="url(#neon-glow)"/>
+  <path d="M 50 550 L 20 550 L 20 580 L 50 580" stroke="#ff00ff" stroke-width="3" fill="none" filter="url(#neon-glow)"/>
+  <path d="M 750 550 L 780 550 L 780 580 L 750 580" stroke="#ff00ff" stroke-width="3" fill="none" filter="url(#neon-glow)"/>
+  
+  <!-- Icon -->
+  <rect x="320" y="200" width="160" height="120" fill="none" stroke="#7a00ff" stroke-width="3" rx="8" filter="url(#neon-glow)"/>
+  <circle cx="360" cy="240" r="15" fill="#00eaff" opacity="0.6"/>
+  <path d="M 320 280 L 380 240 L 440 270 L 480 230" stroke="#00eaff" stroke-width="2" fill="none" opacity="0.6"/>
+  
+  <!-- Text -->
+  <text x="400" y="380" font-family="'Orbitron', monospace" font-size="36" font-weight="700" fill="#00eaff" text-anchor="middle" filter="url(#neon-glow)">
+    myShop
+  </text>
+  <text x="400" y="420" font-family="'Rajdhani', sans-serif" font-size="18" fill="#ff00ff" text-anchor="middle" opacity="0.8">
+    IMAGE LOADING...
+  </text>
+  
+  <!-- Scan line animation effect -->
+  <line x1="0" y1="300" x2="800" y2="300" stroke="#00eaff" stroke-width="2" opacity="0.3">
+    <animate attributeName="y1" from="0" to="600" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="y2" from="0" to="600" dur="3s" repeatCount="indefinite"/>
+  </line>
+</svg>
