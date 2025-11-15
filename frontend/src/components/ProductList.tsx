@@ -11,6 +11,8 @@ interface ProductListProps {
 type SortOption = 'newest' | 'price-low' | 'price-high' | 'name-asc' | 'name-desc';
 type ViewMode = 'grid' | 'list';
 
+const PER_PAGE = 12;
+
 const ProductList: React.FC<ProductListProps> = ({ category, isQuickItem }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState<Product[]>([]);
@@ -39,14 +41,32 @@ const ProductList: React.FC<ProductListProps> = ({ category, isQuickItem }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await api.getProducts({
+      const params: {
+        page: number;
+        per_page: number;
+        category?: string;
+        is_quick_item?: boolean;
+      } = {
         page: currentPage,
-        per_page: 50,
-        category: category || (selectedCategory !== 'all' ? selectedCategory : undefined),
-        is_quick_item: isQuickItem,
-      });
+        per_page: PER_PAGE,
+      };
+
+      if (category) {
+        params.category = category;
+      } else if (selectedCategory !== 'all') {
+        params.category = selectedCategory;
+      }
+
+      if (isQuickItem) {
+        params.is_quick_item = true;
+      }
+
+      const response = await api.getProducts(params);
       setProducts(response.data);
       setTotalPages(response.last_page);
+      if (typeof response.current_page === 'number') {
+        setCurrentPage(response.current_page);
+      }
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to load products');
     } finally {
@@ -93,7 +113,20 @@ const ProductList: React.FC<ProductListProps> = ({ category, isQuickItem }) => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setSearchParams({ search: searchQuery, category: selectedCategory, sort: sortBy });
+    const params: Record<string, string> = {};
+
+    if (searchQuery) {
+      params.search = searchQuery;
+    }
+
+    if (selectedCategory !== 'all') {
+      params.category = selectedCategory;
+    }
+
+    params.sort = sortBy;
+
+    setSearchParams(params);
+    setCurrentPage(1);
   };
 
   const addToCart = async (product: Product, e: React.MouseEvent) => {
@@ -125,7 +158,7 @@ const ProductList: React.FC<ProductListProps> = ({ category, isQuickItem }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" role="status" aria-live="polite">
         <div className="text-center">
           <div className="cyber-spinner mx-auto mb-4"></div>
           <p className="text-neon-cyan font-orbitron text-xl animate-pulse">LOADING PRODUCTS...</p>
@@ -223,8 +256,8 @@ const ProductList: React.FC<ProductListProps> = ({ category, isQuickItem }) => {
       {filteredProducts.length === 0 ? (
         <div className="hologram-card p-12 text-center">
           <div className="text-6xl mb-4">🔍</div>
-          <h3 className="text-2xl font-orbitron font-bold text-neon-cyan mb-2">NO PRODUCTS FOUND</h3>
-          <p className="text-neon-purple/70 font-rajdhani">Try adjusting your search or filters</p>
+          <h3 className="text-2xl font-orbitron font-bold text-neon-cyan mb-2">No products found</h3>
+          <p className="text-neon-purple/70 font-rajdhani">Try adjusting your search or filters.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -250,8 +283,12 @@ const ProductList: React.FC<ProductListProps> = ({ category, isQuickItem }) => {
                 />
                 {product.is_quick_item && (
                   <div className="absolute top-2 right-2">
-                    <span className="status-badge status-badge-active font-tech text-xs">
-                      ⚡ QUICK
+                    <span
+                      className="status-badge status-badge-active font-tech text-xs inline-flex items-center gap-1"
+                      data-testid="quick-item-badge"
+                    >
+                      <span aria-hidden="true">⚡</span>
+                      <span>Quick Delivery</span>
                     </span>
                   </div>
                 )}
@@ -291,7 +328,7 @@ const ProductList: React.FC<ProductListProps> = ({ category, isQuickItem }) => {
                           key={index}
                           className="text-xs px-2 py-0.5 bg-neon-purple/20 text-neon-purple border border-neon-purple/50 font-tech"
                         >
-                          #{tag}
+                          {tag}
                         </span>
                       ))}
                     </div>
@@ -318,39 +355,42 @@ const ProductList: React.FC<ProductListProps> = ({ category, isQuickItem }) => {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="mt-12 flex justify-center items-center space-x-4">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={currentPage === 1}
-            className="cyber-button disabled:opacity-30 disabled:cursor-not-allowed px-6 py-2"
-          >
-            ← PREV
-          </button>
-          <div className="flex items-center space-x-2">
-            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-              const page = i + 1;
-              return (
-                <button
-                  key={page}
-                  onClick={() => setCurrentPage(page)}
-                  className={`w-10 h-10 font-orbitron font-bold ${
-                    currentPage === page
-                      ? 'bg-neon-pink/20 border-2 border-neon-pink text-neon-pink'
-                      : 'bg-transparent border-2 border-neon-cyan/30 text-neon-cyan hover:border-neon-cyan'
-                  } transition-all`}
-                >
-                  {page}
-                </button>
-              );
-            })}
+        <div className="mt-12 flex flex-col items-center space-y-4">
+          <span className="font-rajdhani text-sm text-neon-cyan/80">Page {currentPage} of {totalPages}</span>
+          <div className="flex justify-center items-center space-x-4">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="cyber-button disabled:opacity-30 disabled:cursor-not-allowed px-6 py-2"
+            >
+              Prev
+            </button>
+            <div className="flex items-center space-x-2">
+              {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                const page = i + 1;
+                return (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`w-10 h-10 font-orbitron font-bold ${
+                      currentPage === page
+                        ? 'bg-neon-pink/20 border-2 border-neon-pink text-neon-pink'
+                        : 'bg-transparent border-2 border-neon-cyan/30 text-neon-cyan hover:border-neon-cyan'
+                    } transition-all`}
+                  >
+                    {page}
+                  </button>
+                );
+              })}
+            </div>
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="cyber-button disabled:opacity-30 disabled:cursor-not-allowed px-6 py-2"
+            >
+              Next
+            </button>
           </div>
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={currentPage === totalPages}
-            className="cyber-button disabled:opacity-30 disabled:cursor-not-allowed px-6 py-2"
-          >
-            NEXT →
-          </button>
         </div>
       )}
     </div>
