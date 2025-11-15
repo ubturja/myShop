@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Home from './components/Home';
 import ProductList from './components/ProductList';
 import ProductDetail from './components/ProductDetail';
@@ -26,7 +26,24 @@ function Navigation() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+
+  // Handle click outside to close user menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setShowUserMenu(false);
+      }
+    };
+
+    if (showUserMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }
+  }, [showUserMenu]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,10 +62,14 @@ function Navigation() {
     const token = localStorage.getItem('auth_token');
     const userData = localStorage.getItem('auth_user');
     
+    console.log('Auth check - Token:', !!token, 'User data:', !!userData);
+    
     if (token && userData) {
       try {
+        const parsedUser = JSON.parse(userData);
+        console.log('Parsed user:', parsedUser);
         setIsAuthenticated(true);
-        setUser(JSON.parse(userData));
+        setUser(parsedUser);
       } catch (error) {
         console.error('Error parsing user data:', error);
         setIsAuthenticated(false);
@@ -178,10 +199,11 @@ function Navigation() {
               </div>
             </Link>
             {isAuthenticated && user ? (
-              <div className="relative">
+              <div className="relative" ref={userMenuRef}>
                 <button
                   onClick={() => setShowUserMenu(!showUserMenu)}
                   className="flex items-center space-x-2 text-neon-cyan hover:text-neon-pink transition-all px-3 py-2 rounded-sm border-2 border-neon-cyan hover:border-neon-pink focus:outline-none focus:ring-2 focus:ring-neon-pink"
+                  aria-label="User menu"
                 >
                   <div className="w-8 h-8 bg-gradient-to-br from-neon-purple to-neon-cyan rounded-full flex items-center justify-center">
                     <span className="text-white font-orbitron font-bold text-sm">
