@@ -35,6 +35,9 @@ class AuthService {
       credentials.role
     );
     
+    console.log('Login response:', response);
+    console.log('User data:', response.user);
+    
     this.setToken(response.access_token);
     this.setUser(response.user);
     

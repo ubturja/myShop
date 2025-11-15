@@ -16,7 +16,7 @@ export default function LoginAdmin() {
 
     try {
       await authService.login({ email, password, role: 'ADMIN' });
-      navigate('/admin/dashboard');
+      window.location.href = '/admin/dashboard';
     } catch (err: any) {
       const message = err.response?.data?.message || err.message || 'Login failed';
       setError(message);

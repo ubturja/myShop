@@ -15,8 +15,11 @@ export default function LoginCustomer() {
     setLoading(true);
 
     try {
-      await authService.login({ email, password, role: 'CUSTOMER' });
-      navigate('/');
+      const response = await authService.login({ email, password, role: 'CUSTOMER' });
+      console.log('Login successful, response:', response);
+      
+      // Force page reload to ensure auth state updates
+      window.location.href = '/';
     } catch (err: any) {
       const message = err.response?.data?.message || err.message || 'Login failed';
       setError(message);

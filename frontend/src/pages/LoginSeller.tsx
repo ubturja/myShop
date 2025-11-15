@@ -16,7 +16,7 @@ export default function LoginSeller() {
 
     try {
       await authService.login({ email, password, role: 'SELLER' });
-      navigate('/seller/dashboard');
+      window.location.href = '/seller/dashboard';
     } catch (err: any) {
       const message = err.response?.data?.message || err.message || 'Login failed';
       setError(message);
