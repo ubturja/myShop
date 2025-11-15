@@ -18,12 +18,14 @@ export default function LoginCustomer() {
       const response = await authService.login({ email, password, role: 'CUSTOMER' });
       console.log('Login successful, response:', response);
       
+      // Wait a bit to ensure localStorage is written
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
       // Force page reload to ensure auth state updates
       window.location.href = '/';
     } catch (err: any) {
       const message = err.response?.data?.message || err.message || 'Login failed';
       setError(message);
-    } finally {
       setLoading(false);
     }
   };

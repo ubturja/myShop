@@ -93,7 +93,11 @@ class AuthService {
    * Store user data
    */
   setUser(user: User): void {
-    localStorage.setItem(AuthService.USER_KEY, JSON.stringify(user));
+    console.log('setUser called with:', user);
+    const jsonString = JSON.stringify(user);
+    console.log('Stringified user:', jsonString);
+    localStorage.setItem(AuthService.USER_KEY, jsonString);
+    console.log('Saved to localStorage. Verify:', localStorage.getItem(AuthService.USER_KEY));
   }
 
   /**
