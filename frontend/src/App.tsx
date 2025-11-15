@@ -16,11 +16,16 @@ import RegisterCustomer from './pages/RegisterCustomer';
 import RegisterSeller from './pages/RegisterSeller';
 import SellerDashboard from './pages/SellerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import Profile from './pages/Profile';
+import Orders from './pages/Orders';
 
 function Navigation() {
   const [cartCount, setCartCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -35,6 +40,24 @@ function Navigation() {
   useEffect(() => {
     // Close mobile menu when location changes
     setMobileMenuOpen(false);
+    
+    // Check authentication status
+    const token = localStorage.getItem('auth_token');
+    const userData = localStorage.getItem('auth_user');
+    
+    if (token && userData) {
+      try {
+        setIsAuthenticated(true);
+        setUser(JSON.parse(userData));
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    } else {
+      setIsAuthenticated(false);
+      setUser(null);
+    }
     
     // Load cart count from localStorage
     const cart = localStorage.getItem('cart');
@@ -51,6 +74,15 @@ function Navigation() {
       }
     }
   }, [location]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_user');
+    setIsAuthenticated(false);
+    setUser(null);
+    setShowUserMenu(false);
+    window.location.href = '/';
+  };
 
   const isActive = (path: string) => {
     return location.pathname === path || location.pathname.startsWith(`${path}/`);
@@ -145,12 +177,81 @@ function Navigation() {
                 )}
               </div>
             </Link>
-            <Link
-              to="/login"
-              className="cyber-button cyber-button-pink px-4 py-2 text-sm"
-            >
-              Login
-            </Link>
+            {isAuthenticated && user ? (
+              <div className="relative">
+                <button
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className="flex items-center space-x-2 text-neon-cyan hover:text-neon-pink transition-all px-3 py-2 rounded-sm border-2 border-neon-cyan hover:border-neon-pink focus:outline-none focus:ring-2 focus:ring-neon-pink"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-neon-purple to-neon-cyan rounded-full flex items-center justify-center">
+                    <span className="text-white font-orbitron font-bold text-sm">
+                      {user.name?.charAt(0).toUpperCase() || 'U'}
+                    </span>
+                  </div>
+                  <span className="font-rajdhani font-semibold hidden lg:block">{user.name}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                
+                {showUserMenu && (
+                  <div className="absolute right-0 mt-2 w-56 bg-bg-dark-2 border-2 border-neon-cyan rounded-sm shadow-neon-cyan z-50">
+                    <div className="px-4 py-3 border-b-2 border-neon-cyan/30">
+                      <p className="text-sm font-rajdhani text-neon-cyan">Signed in as</p>
+                      <p className="text-sm font-orbitron font-bold text-neon-pink truncate">{user.email}</p>
+                      <p className="text-xs font-tech text-neon-purple uppercase mt-1">{user.role}</p>
+                    </div>
+                    <div className="py-2">
+                      {user.role === 'SELLER' && (
+                        <Link
+                          to="/seller/dashboard"
+                          className="block px-4 py-2 text-sm font-rajdhani text-neon-cyan hover:bg-neon-cyan/10 hover:text-neon-pink transition-colors"
+                          onClick={() => setShowUserMenu(false)}
+                        >
+                          📊 Seller Dashboard
+                        </Link>
+                      )}
+                      {user.role === 'ADMIN' && (
+                        <Link
+                          to="/admin/dashboard"
+                          className="block px-4 py-2 text-sm font-rajdhani text-neon-cyan hover:bg-neon-cyan/10 hover:text-neon-pink transition-colors"
+                          onClick={() => setShowUserMenu(false)}
+                        >
+                          ⚙️ Admin Dashboard
+                        </Link>
+                      )}
+                      <Link
+                        to="/orders"
+                        className="block px-4 py-2 text-sm font-rajdhani text-neon-cyan hover:bg-neon-cyan/10 hover:text-neon-pink transition-colors"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        📦 My Orders
+                      </Link>
+                      <Link
+                        to="/profile"
+                        className="block px-4 py-2 text-sm font-rajdhani text-neon-cyan hover:bg-neon-cyan/10 hover:text-neon-pink transition-colors"
+                        onClick={() => setShowUserMenu(false)}
+                      >
+                        👤 Profile
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 text-sm font-rajdhani text-neon-pink hover:bg-neon-pink/10 transition-colors border-t-2 border-neon-cyan/30"
+                      >
+                        🚪 Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="cyber-button cyber-button-pink px-4 py-2 text-sm"
+              >
+                Login
+              </Link>
+            )}
           </nav>
 
           {/* Mobile menu button */}
@@ -295,6 +396,10 @@ function App() {
             {/* Dashboard routes */}
             <Route path="/seller/dashboard" element={<SellerDashboard />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            
+            {/* User Profile routes */}
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/orders" element={<Orders />} />
           </Routes>
         </main>
 

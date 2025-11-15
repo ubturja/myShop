@@ -279,6 +279,11 @@ class ApiClient {
   }
 
   // Checkout endpoints
+  async getOrders(): Promise<Order[]> {
+    const response = await this.client.get<{ orders: Order[] }>('/orders');
+    return response.data.orders;
+  }
+
   async checkoutQuickLocal(coordinates: {
     latitude: number;
     longitude: number;
