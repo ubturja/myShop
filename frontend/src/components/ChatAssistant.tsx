@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import api, { ChatMessage, Product } from '../services/api';
 
 const ChatAssistant: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    try {
+      return !!localStorage.getItem('auth_token');
+    } catch (error) {
+      return false;
+    }
+  });
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
@@ -16,9 +22,12 @@ const ChatAssistant: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if user is authenticated
-    const token = localStorage.getItem('auth_token');
-    setIsAuthenticated(!!token);
+    try {
+      const token = localStorage.getItem('auth_token');
+      setIsAuthenticated(!!token);
+    } catch (error) {
+      setIsAuthenticated(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -26,35 +35,53 @@ const ChatAssistant: React.FC = () => {
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const element = messagesEndRef.current;
+    if (element && typeof element.scrollIntoView === 'function') {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleSend = async () => {
-    if (!input.trim() || loading) return;
+    const trimmedMessage = input.trim();
+    if (!trimmedMessage || loading) return;
 
     const userMessage: ChatMessage = {
       role: 'user',
-      content: input.trim(),
+      content: trimmedMessage,
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedHistory = [...messages, userMessage];
+    setMessages(updatedHistory);
     setInput('');
     setLoading(true);
+    setRecommendations([]);
 
     try {
-      const response = await api.chatWithAssistant(userMessage.content, messages);
-      
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: response.reply,
-        },
-      ]);
+      const response = await api.chatWithAssistant(userMessage.content, updatedHistory);
 
-      // If AI recommends products, show them
-      if (response.products && response.products.length > 0) {
-        setRecommendations(response.products);
+      if (response.message) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: response.message,
+          },
+        ]);
+      }
+
+      if (response.recommended_product_ids && response.recommended_product_ids.length > 0) {
+        const products = await Promise.all(
+          response.recommended_product_ids.map(async (productId) => {
+            try {
+              const product = await api.getProduct(productId);
+              return { ...product, id: productId };
+            } catch (error) {
+              return null;
+            }
+          })
+        );
+
+        setRecommendations(products.filter((product): product is Product => product !== null));
       }
     } catch (err: any) {
       setMessages((prev) => [
@@ -84,34 +111,36 @@ const ChatAssistant: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-900 mb-8">AI Shopping Assistant</h1>
 
-      {!isAuthenticated ? (
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <svg
-            className="mx-auto h-16 w-16 text-gray-400 mb-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-            />
-          </svg>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">Login Required</h2>
-          <p className="text-gray-600 mb-6">
-            You need to be logged in to use the AI Shopping Assistant.
-          </p>
-          <Link
-            to="/login"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-          >
-            Go to Login
-          </Link>
+      {!isAuthenticated && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6" role="alert">
+          <div className="flex items-center gap-3">
+            <svg
+              className="h-8 w-8 text-blue-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              />
+            </svg>
+            <div>
+              <h2 className="text-lg font-semibold text-gray-900">Continue as guest</h2>
+              <p className="text-sm text-gray-600">
+                Sign in to save your chat history and receive personalized recommendations.
+                <Link to="/login" className="text-blue-600 font-medium ml-1">
+                  Go to Login
+                </Link>
+              </p>
+            </div>
+          </div>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      )}
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Chat Panel */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-[600px]">
@@ -263,56 +292,17 @@ const ChatAssistant: React.FC = () => {
               ].map((suggestion, index) => (
                 <button
                   key={index}
-                  onClick={() => {
-                    setInput(suggestion);
-                    // Trigger send after a short delay to ensure input is set
-                    setTimeout(() => {
-                      const userMessage: ChatMessage = {
-                        role: 'user',
-                        content: suggestion,
-                      };
-                      setMessages((prev) => [...prev, userMessage]);
-                      setLoading(true);
-                      
-                      api.chatWithAssistant(suggestion, messages)
-                        .then((response) => {
-                          setMessages((prev) => [
-                            ...prev,
-                            {
-                              role: 'assistant',
-                              content: response.reply,
-                            },
-                          ]);
-                          if (response.products && response.products.length > 0) {
-                            setRecommendations(response.products);
-                          }
-                        })
-                        .catch(() => {
-                          setMessages((prev) => [
-                            ...prev,
-                            {
-                              role: 'assistant',
-                              content: 'Sorry, I encountered an error. Please try again.',
-                            },
-                          ]);
-                        })
-                        .finally(() => {
-                          setLoading(false);
-                          setInput('');
-                        });
-                    }, 100);
-                  }}
+                  onClick={() => setInput(suggestion)}
                   className="w-full text-left text-sm text-blue-600 hover:text-blue-800 hover:bg-blue-50 px-3 py-2 rounded transition-colors"
                   data-testid={`suggestion-${index}`}
                 >
-                  "{suggestion}"
+                  {suggestion}
                 </button>
               ))}
             </div>
           </div>
         </div>
       </div>
-      )}
     </div>
   );
 };

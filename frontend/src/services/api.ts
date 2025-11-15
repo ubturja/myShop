@@ -349,10 +349,10 @@ class ApiClient {
   async chatWithAssistant(
     message: string,
     conversationHistory?: ChatMessage[]
-  ): Promise<{ reply: string; products?: Product[] }> {
+  ): Promise<{ message: string; recommended_product_ids?: number[] }> {
     const response = await this.client.post<{
-      reply: string;
-      products?: Product[];
+      message: string;
+      recommended_product_ids?: number[];
     }>('/ai/assistant', {
       message,
       conversation_history: conversationHistory,
